@@ -1,4 +1,4 @@
-name: .NET Core Container Build and Push
+name: .NET Core Container Build and ACR Push
 
 on: [push]
 

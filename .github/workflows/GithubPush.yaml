@@ -1,4 +1,4 @@
-name: .NET Core Container Build and Push
+name: .NET Core Container Build and GHCR Push
 
 on: [push]
 
@@ -30,5 +30,5 @@ jobs:
       - name: Build and Push Container to GHCR
         run: |
           dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
-            -p:ContainerRegistry=ghcr.io \
-            -p:ContainerImageTags="${{ github.run_number }};latest"
+            /p:ContainerRegistry=ghcr.io \
+            /p:ContainerImageTags="${{ github.run_number }};latest"
