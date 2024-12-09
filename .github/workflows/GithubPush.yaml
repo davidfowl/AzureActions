@@ -30,7 +30,7 @@ jobs:
       - name: Build and Push Container to GHCR
         run: |
           IMAGE_NAME="ghcr.io/${{ github.repository }}/api"
-          dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
+          dotnet publish --project Api --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
             -p:ContainerRegistry=ghcr.io \
             -p:ContainerImageName=${{ github.repository }}/api \
             -p:ContainerImageTags="${{ github.run_number }};latest"
