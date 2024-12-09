@@ -32,4 +32,6 @@ jobs:
         run: |
           dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
             -p:ContainerRegistry=ghcr.io \
-            -p:ContainerImageTags="${{ github.run_number }};latest"
+            -p:ContainerImageTags=${{ github.run_number }} \
+            -p:ContainerImageTags=latest
+
