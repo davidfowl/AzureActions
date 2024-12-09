@@ -39,7 +39,7 @@ jobs:
           ACR_LOGIN_SERVER="${{ secrets.ACR_NAME }}.azurecr.io"
           dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
             -p:ContainerRegistry=$ACR_LOGIN_SERVER \
-            -p:ContainerImageTags="${{ github.run_number }};latest"
+            -p:ContainerImageTags=latest
 
       # Log out from Azure
       - name: Logout
