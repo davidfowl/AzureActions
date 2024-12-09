@@ -1,0 +1,36 @@
+name: .NET Core Container Build and Push
+
+on: [push]
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write  # Required for pushing to GHCR
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      # Log in to GitHub Container Registry (GHCR)
+      - name: GHCR Login
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.x'  # Adjust as needed
+
+      # Build and publish container image
+      - name: Build and Push Container to GHCR
+        run: |
+          IMAGE_NAME="ghcr.io/${{ github.repository }}/api"
+          dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer \
+            -p:ContainerRegistry=ghcr.io \
+            -p:ContainerImageName=${{ github.repository }}/api \
+            -p:ContainerImageTags="${{ github.run_number }};latest"
